@@ -1,0 +1,1 @@
+Class<bs>:<bs><course number>Semester<bs>:<bs><year info>Institute<bs>:<bs><university>Instructor<bs>:<bs><instructor>Title<bs>:<bs><title><bl>Homeworks:<bs><number of hws><bs> , <bs><weightage of homeworks>Quiz:<bs><number of quizzes><bs> , <bs><weightage of quizzes>Exams:<bs><number of exams><bs> , <bs><weightage of exams><1 bl><column headers><a line><student data>
