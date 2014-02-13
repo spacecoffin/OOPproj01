@@ -15,6 +15,8 @@ def classInfo(fileIn):
     line = f.readline()
     print(line)
     print(line.find(':')) #test to see if use of find method is appropriate
+    parts = line.split(':', 1)
+    print(parts)
     #read line 2, set variable "year" equal to text after ":", ignoring whitespace
     #read line 3, set variable "university" equal to text after ":", ignoring whitespace
     #read line 4, set variable "instructor" equal to text after ":", ignoring whitespace
