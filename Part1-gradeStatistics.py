@@ -9,15 +9,13 @@
 fileIn = "gradesS.in" #CHANGE TO 'grades.in' before submission also, be sure the file can be found given the path.
 
 def classInfo(fileIn): #fileIn should be the name of the file to be operated on
-    f = open("gradesS.in", 'r')
+    f = open(fileIn, 'r')
     #create variable for each field, setting each equal to the appropriate string
     #read line 1, set variable "course" equal to text after ":", ignoring whitespace
         #to do this: readline 1 as a str, then have it read by char up to the ':'
-    line = f.readline(1)
-    print(line, 'wut')
+    line = f.readline()
+    print(line)
     #read line 2, set variable "year" equal to text after ":", ignoring whitespace
-    lines = f.readlines()
-    print (lines)
     #read line 3, set variable "university" equal to text after ":", ignoring whitespace
     #read line 4, set variable "instructor" equal to text after ":", ignoring whitespace
     #read line 5, set variable "title" equal to text after ":", ignoring whitespace
@@ -26,6 +24,7 @@ def classInfo(fileIn): #fileIn should be the name of the file to be operated on
     f.close()
     
 def main():
+    classInfo("gradesS.in")
     print()
 
 main()
