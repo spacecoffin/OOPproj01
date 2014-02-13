@@ -13,14 +13,29 @@ def classInfo(fileIn):
     #read line 1, set variable "course" equal to text after ":", ignoring whitespace
         #to do this: readline 1 as a str, then have it read by char up to the ':'
     line = f.readline()
-    line.rstrip()
     parts = line.split(':', 1)
     course = parts[1]
-    print(course)
-    #read line 2, set variable "year" equal to text after ":", ignoring whitespace
+    print(course.strip())
+    #read line 2, set variable "semester" equal to text after ":", ignoring whitespace
+    line = f.readline()
+    parts = line.split(':', 1)
+    semester = parts[1]
+    print(semester.strip())
     #read line 3, set variable "university" equal to text after ":", ignoring whitespace
+    line = f.readline()
+    parts = line.split(':', 1)
+    university = parts[1]
+    print(university.strip())
     #read line 4, set variable "instructor" equal to text after ":", ignoring whitespace
+    line = f.readline()
+    parts = line.split(':', 1)
+    instructor = parts[1]
+    print(instructor.strip())
     #read line 5, set variable "title" equal to text after ":", ignoring whitespace
+    line = f.readline()
+    parts = line.split(':', 1)
+    title = parts[1]
+    print(title.strip())
     #plug each variable into the output format and print
         #-or- do we want to pass the vals of the vars for later use?
     f.close()
