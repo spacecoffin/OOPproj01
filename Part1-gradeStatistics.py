@@ -19,8 +19,17 @@ def classInfo(fileIn):
     infoAsStr = "{0[0]}, {0[1]}\n{0[2]}\n{0[3]}\n{0[4]}\n".format(infoList)
     print(infoAsStr)
     f.close()
-    
+
+#gradingInfo - This function should process the three lines in the input file that contain information about the numbers and weights of homeworks, quizzes, and exams.
+#You can assume the following. Every class will have at least one homework and one exam. A class may or may not have a quiz. Each homework carries the same weight and so does each quiz (if there is one) and each exam. The weightage of homeworks, quizzes, and exams add up to 100.
+
+def gradingInfo(fileIn):
+    f = open(fileIn, 'r')
+    f.close()
+
 def main():
-    classInfo("gradesS.in")
+    inputFile = "gradesS.in"
+    classInfo(inputFile)
+    gradingInfo(inputFile)
 
 main()
