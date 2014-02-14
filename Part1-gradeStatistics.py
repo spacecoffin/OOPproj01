@@ -52,7 +52,10 @@ def studentScores(fileIn):
         if "name" and "ssn" in line:
             x += 1
             line = f.readline()
-            print(line)
+            print("Dashes: {0}".format(line))
+    while line:
+        line = f.readline()
+        print(line)
     f.close()
 
 
@@ -61,5 +64,6 @@ def main():
     classInfo(inputFile)
     gradingInfo(inputFile)
     print(gradingInfo(inputFile))
+    studentScores(inputFile)
 
 main()
