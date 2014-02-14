@@ -10,34 +10,17 @@ def classInfo(fileIn):
     #fileIn should be passed the name of the file to be operated on (preceded by its path if it is not within either the current working directory or the search path)
     f = open(fileIn, 'r')
     #create variable for each field, setting each equal to the appropriate string
-    #read line 1, set variable "course" equal to text after ":", ignoring whitespace
-        #to do this: readline 1 as a str, then have it read by char up to the ':'
-    line = f.readline()
-    parts = line.split(':', 1)
-    course = parts[1]
-    print(course.strip())
-    #read line 2, set variable "semester" equal to text after ":", ignoring whitespace
-    line = f.readline()
-    parts = line.split(':', 1)
-    semester = parts[1]
-    print(semester.strip())
-    #read line 3, set variable "university" equal to text after ":", ignoring whitespace
-    line = f.readline()
-    parts = line.split(':', 1)
-    university = parts[1]
-    print(university.strip())
-    #read line 4, set variable "instructor" equal to text after ":", ignoring whitespace
-    line = f.readline()
-    parts = line.split(':', 1)
-    instructor = parts[1]
-    print(instructor.strip())
-    #read line 5, set variable "title" equal to text after ":", ignoring whitespace
-    line = f.readline()
-    parts = line.split(':', 1)
-    title = parts[1]
-    print(title.strip())
     #plug each variable into the output format and print
-        #-or- do we want to pass the vals of the vars for later use?
+    #-or- do we want to pass the vals of the vars for later use?
+    x = 5
+    infoList = []
+    while x > 0:
+        line = f.readline()
+        parts = line.split(':', 1)
+        field = parts[1] # convert item 1 to a string so that it can be stripped of leading and trailing whitespace in the next line
+        infoList.append(field.strip())
+        x -= 1
+    print(infoList) 
     f.close()
     
 def main():
