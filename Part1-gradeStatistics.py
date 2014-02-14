@@ -39,11 +39,20 @@ def gradingInfo(fileIn):
             gradeInfoList.append(numInts[1])
             x -= 1
     return gradeInfoList # I feel like extracting these values for use in a dictionary that would be returned would be overkill for this program.
+    # Should an exception be raised if the weight of each type of work does not add up to 100?
     f.close()
 
 def studentScores(fileIn):
     #studentScores - This function should process the remainder of the file. You may want to compute the letter grade of each student while processing the scores. This can be made as a nested function.
     f = open(fileIn, 'r')
+    x = 0
+    while x < 1:
+        line = f.readline()
+        line = line.casefold()
+        if "name" and "ssn" in line:
+            x += 1
+            line = f.readline()
+            print(line)
     f.close()
 
 
