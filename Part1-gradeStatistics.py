@@ -3,9 +3,8 @@
 #Reed Rosenberg
 #UPDATE TO PROPER DOCUMENTATION
 
-#classInfo - This function will process the first five lines of the input file that gives information about the course.
-
 def classInfo(fileIn):
+    #classInfo - This function will process the first five lines of the input file that gives information about the course.
     #fileIn should be passed the name of the file to be operated on (preceded by its path if it is not within either the current working directory or the search path)
     f = open(fileIn, 'r')
     classInfoList = []
@@ -20,9 +19,8 @@ def classInfo(fileIn):
     print(infoAsStr)
     f.close()
 
-#gradingInfo - This function should process the three lines in the input file that contain information about the numbers and weights of homeworks, quizzes, and exams.
-
 def gradingInfo(fileIn):
+    #gradingInfo - This function should process the three lines in the input file that contain information about the numbers and weights of homeworks, quizzes, and exams.
     f = open(fileIn, 'r')
     #Begin reading at appropriate line and perform same readline & split at ':', but then take parts[1], split it again at ',' then convert the remaining parts into ints. Store the ints in a list to later be returned by the function.
     gradeInfoList = []
@@ -42,6 +40,12 @@ def gradingInfo(fileIn):
             x -= 1
     return gradeInfoList # I feel like extracting these values for use in a dictionary that would be returned would be overkill for this program.
     f.close()
+
+def studentScores(fileIn):
+    #studentScores - This function should process the remainder of the file. You may want to compute the letter grade of each student while processing the scores. This can be made as a nested function.
+    f = open(fileIn, 'r')
+    f.close()
+
 
 def main():
     inputFile = "gradesS.in"
