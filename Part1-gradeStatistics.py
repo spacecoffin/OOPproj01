@@ -34,21 +34,19 @@ def gradingInfo(fileIn):
             y += 1
         if y > 0:
             parts = line.split(':', 1)
-            print ("Parts: {0}".format(parts))
             numStr = parts[1]
-            print ("numStr: {0}".format(numStr))
             numList = numStr.split(',', 1)
-            print ("numList: {0}".format(numList))
             numInts = [int(i) for i in numList]
             gradeInfoList.append(numInts[0]) #I should probably add a safety check like an 'isnum' here
             gradeInfoList.append(numInts[1])
             x -= 1
-    print(gradeInfoList)
+    return gradeInfoList # I feel like extracting these values for use in a dictionary that would be returned would be overkill for this program.
     f.close()
 
 def main():
     inputFile = "gradesS.in"
     classInfo(inputFile)
     gradingInfo(inputFile)
+    print(gradingInfo(inputFile))
 
 main()
