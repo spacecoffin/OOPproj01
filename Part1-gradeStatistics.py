@@ -27,16 +27,19 @@ def gradingInfo(fileIn):
     #Begin reading at appropriate line and perform same readline & split at ':', but then take parts[1], split it again at ',' then convert the remaining parts into ints. Store the ints in a list to later be returned by the function.
     gradeInfoList = []
     x = 3
+    y = 0
     while x > 0:
-        line = f.readline(n)
+        line = f.readline()
         if "Homeworks" in line:
             y += 1
         if y > 0:
             parts = line.split(':', 1)
+            print(parts)
             numStr = parts[1]
             numList = numStr.split(',', 1)
             gradeInfoList.append(int(i) for i in numList) #I should probably add a safety check like an 'isnum' here
             x -= 1
+            print(numList)
     print(gradeInfoList)
     f.close()
 
