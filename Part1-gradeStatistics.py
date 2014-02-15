@@ -78,31 +78,19 @@ def studentScores(fileIn):
         aopt = aopt + achar
         achar = f.read(1)
         z -= 1
+    opts.append(aopt)
     print(aopt)
-    #z = 1
-    #while z > 0:
-    #    achar = f.read(1)
-    #    if achar.isalpha():
-    #        while range(2):
-    #            aopt = aopt + achar
-    #            achar = f.read(1)
-    #            print(achar)
-    #        z -= 1
-    #print(aopt)
-    #apost = ''
-    #posts = []
-    #if aopt is 'A-F' or 'P/F':
-    #    opts.append(aopt)
-    #    while achar.isspace():
-    #        apost = f.read(1)
-    #    posts.append(apost)
-    #elif aopt is 'AUD':
-    #    opts.append(aopt)
-    #    apost = 'N'
-    #    posts.append(apost)
-    #print(apost)
-    #print(opts)
-    #print(posts)
+    apost = ''
+    posts = []
+    if aopt is 'A-F' or 'P/F':
+        while achar.isspace():
+            achar = f.read(1)
+        apost = achar
+        posts.append(apost)
+    elif aopt is 'AUD':
+        apost = 'N'
+        posts.append(apost)
+    print(apost)
         # Information fields about the students should be pulled from left to right.
         # To pull the names: Read the str pulled from the io from left to right, char by char. Create a new string for the student's name. Read a char then check if it is a number. If it is not, append it to the string (to later be appended to a list of all the student's info). If it is a number, strip the string using strip(), create a new sting for the student's SSN and append it to that.
     f.close()
