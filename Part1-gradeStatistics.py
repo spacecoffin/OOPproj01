@@ -71,8 +71,14 @@ def studentScores(fileIn):
     print(assn)
     aopt = ''
     opts = []
-    print(achar)
-    #while not achar.
+    while achar.isspace():
+        achar = f.read(1)
+    z = 3
+    while z > 0:
+        aopt = aopt + achar
+        achar = f.read(1)
+        z -= 1
+    print(aopt)
     #z = 1
     #while z > 0:
     #    achar = f.read(1)
