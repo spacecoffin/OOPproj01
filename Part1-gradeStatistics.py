@@ -56,10 +56,17 @@ def studentScores(fileIn):
     aname = ''
     while not achar.isnumeric():
         aname = aname + achar
-        print(aname)
         achar = f.read(1)
     aname = aname.strip()
-    print(aname)
+    names = []
+    names.append(aname)
+    assn = ''
+    y = 11
+    while y > 0:
+        assn = assn + achar
+        achar = f.read(1)
+        y -= 1
+    print(assn)
         # Information fields about the students should be pulled from left to right.
         # To pull the names: Read the str pulled from the io from left to right, char by char. Create a new string for the student's name. Read a char then check if it is a number. If it is not, append it to the string (to later be appended to a list of all the student's info). If it is a number, strip the string using strip(), create a new sting for the student's SSN and append it to that.
     f.close()
