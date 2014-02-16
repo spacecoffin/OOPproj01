@@ -52,17 +52,21 @@ def studentScores(fileIn):
         if "name" and "ssn" in line:
             x += 1
             line = f.readline()
-    achar = ''
+    achar = 'a'
+    names = []
+    ssns = []
+    opts = []
+    posts = []
+    gradesList = []
     while achar:
+        achar = ''
         aname = ''
         while not achar.isnumeric():
             aname = aname + achar
             achar = f.read(1)
         aname = aname.strip()
-        names = []
         names.append(aname)
         assn = ''
-        ssns = []
         y = 11
         while y > 0:
             assn = assn + achar
@@ -71,7 +75,6 @@ def studentScores(fileIn):
         ssns.append(assn)
         print(assn)
         aopt = ''
-        opts = []
         while achar.isspace():
             achar = f.read(1)
         z = 3
@@ -82,7 +85,6 @@ def studentScores(fileIn):
         opts.append(aopt)
         print(aopt)
         apost = ''
-        posts = []
         if aopt is 'A-F' or 'P/F':
             while achar.isspace():
                 achar = f.read(1)
@@ -96,7 +98,6 @@ def studentScores(fileIn):
         agrade = ''
         anumgrade = 0
         agradeList = []
-        gradesList = []
         while achar is not '\n':
             achar = f.read(1)
             if not achar:
