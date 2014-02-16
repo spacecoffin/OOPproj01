@@ -83,12 +83,12 @@ def studentScores(fileIn):
             z -= 1
         opts.append(aopt)
         apost = ''
-        if "A-F" or "P/F" in aopt:
+        if 'F' in aopt:
             while achar.isspace():
                 achar = f.read(1)
             apost = achar
             posts.append(apost)
-        if "AUD" in aopt:
+        if 'UD' in aopt:
             apost = 'N'
             posts.append(apost)
         achar = f.read(1)
