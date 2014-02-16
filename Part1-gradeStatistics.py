@@ -120,15 +120,21 @@ def studentScores(fileIn):
 
 def stats():
     #This function should output information based on user input. You may want to have nested functions that are invoked for different user inputs.
-    reply = input('(S)ummarize, (F)ull Display, (R)ange, or (Q)uit: ')
-    reply = reply.casefold()
-    if reply == 'Q' or 'q': break
-
+    reply = 'x'
+    while reply:
+        reply = input('(S)ummarize, (F)ull Display, (R)ange, or (Q)uit: ')
+        reply = reply.casefold()
+        if reply == 'Q' or reply == 'q':
+            break
+        elif reply == 'S' or reply == 's':
+            print(classInfo(inputFile))
+    
 def main():
-    inputFile = "gradesS.in"
+    global inputFile; inputFile = "gradesS.in"
     classInfo(inputFile)
     gradingInfo(inputFile)
     print(gradingInfo(inputFile))
     studentScores(inputFile)
+    stats()
 
 main()
