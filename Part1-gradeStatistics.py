@@ -87,10 +87,29 @@ def studentScores(fileIn):
             achar = f.read(1)
         apost = achar
         posts.append(apost)
+        achar = f.read(1)
     elif aopt is 'AUD':
         apost = 'N'
         posts.append(apost)
     print(apost)
+    agrade = ''
+    anumgrade = 0
+    agradeList = []
+    gradesList = []
+    while achar is not '\n':
+        achar = f.read(1)
+        if achar.isnumeric():
+            agrade = agrade + achar
+            while achar.isnumeric():
+                agrade = agrade + achar
+                achar = f.read(1)
+            anumgrade = int(agrade)
+            agradeList.append(anumgrade)
+        elif achar.isspace():
+            continue
+    gradesList.append(agradeList)
+    print(agradeList)
+    print(gradesList)
         # Information fields about the students should be pulled from left to right.
         # To pull the names: Read the str pulled from the io from left to right, char by char. Create a new string for the student's name. Read a char then check if it is a number. If it is not, append it to the string (to later be appended to a list of all the student's info). If it is a number, strip the string using strip(), create a new sting for the student's SSN and append it to that.
     f.close()
