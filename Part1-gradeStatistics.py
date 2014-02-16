@@ -53,63 +53,66 @@ def studentScores(fileIn):
             x += 1
             line = f.readline()
     achar = ''
-    aname = ''
-    while not achar.isnumeric():
-        aname = aname + achar
-        achar = f.read(1)
-    aname = aname.strip()
-    names = []
-    names.append(aname)
-    assn = ''
-    ssns = []
-    y = 11
-    while y > 0:
-        assn = assn + achar
-        achar = f.read(1)
-        y -= 1
-    ssns.append(assn)
-    print(assn)
-    aopt = ''
-    opts = []
-    while achar.isspace():
-        achar = f.read(1)
-    z = 3
-    while z > 0:
-        aopt = aopt + achar
-        achar = f.read(1)
-        z -= 1
-    opts.append(aopt)
-    print(aopt)
-    apost = ''
-    posts = []
-    if aopt is 'A-F' or 'P/F':
+    while achar:
+        aname = ''
+        while not achar.isnumeric():
+            aname = aname + achar
+            achar = f.read(1)
+        aname = aname.strip()
+        names = []
+        names.append(aname)
+        assn = ''
+        ssns = []
+        y = 11
+        while y > 0:
+            assn = assn + achar
+            achar = f.read(1)
+            y -= 1
+        ssns.append(assn)
+        print(assn)
+        aopt = ''
+        opts = []
         while achar.isspace():
             achar = f.read(1)
-        apost = achar
-        posts.append(apost)
-        achar = f.read(1)
-    elif aopt is 'AUD':
-        apost = 'N'
-        posts.append(apost)
-    print(apost)
-    agrade = ''
-    anumgrade = 0
-    agradeList = []
-    gradesList = []
-    while achar is not '\n':
-        achar = f.read(1)
-        if achar.isnumeric():
-            while achar.isnumeric():
-                agrade = agrade + achar
+        z = 3
+        while z > 0:
+            aopt = aopt + achar
+            achar = f.read(1)
+            z -= 1
+        opts.append(aopt)
+        print(aopt)
+        apost = ''
+        posts = []
+        if aopt is 'A-F' or 'P/F':
+            while achar.isspace():
                 achar = f.read(1)
-            anumgrade = int(agrade)
-            agradeList.append(anumgrade)
-            agrade = ''
-        elif achar.isspace():
-            continue
-    gradesList.append(agradeList)
-    print(agradeList)
-    print(gradesList)
+            apost = achar
+            posts.append(apost)
+            achar = f.read(1)
+        elif aopt is 'AUD':
+            apost = 'N'
+            posts.append(apost)
+        print(apost)
+        agrade = ''
+        anumgrade = 0
+        agradeList = []
+        gradesList = []
+        while achar is not '\n':
+            achar = f.read(1)
+            if not achar:
+                break
+            if achar.isnumeric():
+                while achar.isnumeric():
+                    agrade = agrade + achar
+                    achar = f.read(1)
+                anumgrade = int(agrade)
+                agradeList.append(anumgrade)
+                agrade = ''
+            elif achar.isspace():
+                continue
+        gradesList.append(agradeList)
+        print(agradeList)
+        print(gradesList)
         # Information fields about the students should be pulled from left to right.
         # To pull the names: Read the str pulled from the io from left to right, char by char. Create a new string for the student's name. Read a char then check if it is a number. If it is not, append it to the string (to later be appended to a list of all the student's info). If it is a number, strip the string using strip(), create a new sting for the student's SSN and append it to that.
     f.close()
