@@ -128,6 +128,15 @@ def stats():
             break
         elif reply == 'S' or reply == 's':
             print(classInfo(inputFile))
+            headers = 'Id\tHws\tQuizzes\tExams\tTotal\tGrade\n'
+            print(headers)
+            dashes = ''
+            i = len(headers) - 1
+            while i > 0:
+                dashes = dashes + '-'
+                i -= 1
+            dashes = dashes + '\n'
+            print(dashes)
             # The column headers in the output must be “Id”, “Hws”, “Quizzes”, “Exams”, “Total”, “Grade”.
     
 def main():
