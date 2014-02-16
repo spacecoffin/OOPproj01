@@ -128,14 +128,13 @@ def stats():
             break
         elif reply == 'S' or reply == 's':
             print(classInfo(inputFile))
-            headers = 'Id\tHws\tQuizzes\tExams\tTotal\tGrade\n'
+            headers = 'Id\tHws\tQuizzes\tExams\tTotal\tGrade'
             print(headers)
             dashes = ''
-            i = len(headers) - 1
+            i = 45 # temporary solution for appropriate length of dash line, accounting for each field delimited by a tab as 8 spaces and adding 5 more for each char in 'Grade'.
             while i > 0:
                 dashes = dashes + '-'
                 i -= 1
-            dashes = dashes + '\n'
             print(dashes)
             # The column headers in the output must be “Id”, “Hws”, “Quizzes”, “Exams”, “Total”, “Grade”.
     
