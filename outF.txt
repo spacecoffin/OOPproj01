@@ -1,0 +1,6 @@
+BIO:198:01, Fall 2004The University of AdelaideProf. Richie BenaudFinal Grades
+
+Name               Id       Hws     Quizzes     Exams     Total       Grade---------------------------------------------------------------------------Seema Malhotra     7871    20.67    -1.00       58.88       80          B
+Tim Crawford, Jr.  7766    24.58    -1.00       67.88       92          A 
+Tim Shaw           3333    17.42    -1.00       55.13       73          P
+Mehroo Wadia       3689    24.25    -1.00       52.50       77          CHighest:                                                    92Lowest:                                                     73Average:                                                 80.50

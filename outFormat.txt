@@ -1,0 +1,12 @@
+<course number>,<1 bs><year>
+<university>
+<instructor>
+<title>
+<1 bl>
+<column headers>
+<a line>
+<student grades>
+<1 bl>
+Highest:<bs><highest total score>
+Lowest:<bs><lowest total score>
+Average:<bs><average score>
