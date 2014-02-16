@@ -83,15 +83,15 @@ def studentScores(fileIn):
             z -= 1
         opts.append(aopt)
         apost = ''
-        if aopt is 'A-F' or 'P/F':
+        if "A-F" or "P/F" in aopt:
             while achar.isspace():
                 achar = f.read(1)
             apost = achar
             posts.append(apost)
-            achar = f.read(1)
-        elif aopt is 'AUD':
+        if "AUD" in aopt:
             apost = 'N'
             posts.append(apost)
+        achar = f.read(1)
         agrade = ''
         anumgrade = 0
         agradeList = []
