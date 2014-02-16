@@ -99,12 +99,12 @@ def studentScores(fileIn):
     while achar is not '\n':
         achar = f.read(1)
         if achar.isnumeric():
-            agrade = agrade + achar
             while achar.isnumeric():
                 agrade = agrade + achar
                 achar = f.read(1)
             anumgrade = int(agrade)
             agradeList.append(anumgrade)
+            agrade = ''
         elif achar.isspace():
             continue
     gradesList.append(agradeList)
