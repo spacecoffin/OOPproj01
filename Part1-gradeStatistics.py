@@ -109,11 +109,13 @@ def studentScores(fileIn):
             elif achar.isspace():
                 continue
         gradesList.append(agradeList)
-    print(names)
-    print(ssns)
-    print(opts)
-    print(posts)
-    print(gradesList)
+    #print(names)
+    #print(ssns)
+    #print(opts)
+    #print(posts)
+    #print(gradesList)
+    # gradesZip = list(zip())
+    return list(zip(names, ssns, opts, posts))
         # Information fields about the students should be pulled from left to right.
         # To pull the names: Read the str pulled from the io from left to right, char by char. Create a new string for the student's name. Read a char then check if it is a number. If it is not, append it to the string (to later be appended to a list of all the student's info). If it is a number, strip the string using strip(), create a new sting for the student's SSN and append it to that.
     f.close()
@@ -136,14 +138,14 @@ def stats():
                 dashes = dashes + '-'
                 i -= 1
             print(dashes)
-            # The column headers in the output must be “Id”, “Hws”, “Quizzes”, “Exams”, “Total”, “Grade”.
+            
     
 def main():
     global inputFile; inputFile = "gradesS.in"
     classInfo(inputFile)
     gradingInfo(inputFile)
-    print(gradingInfo(inputFile))
     studentScores(inputFile)
+    print(studentScores(inputFile))
     stats()
 
 main()
