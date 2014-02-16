@@ -16,7 +16,7 @@ def classInfo(fileIn):
         classInfoList.append(field.strip())
         x -= 1
     infoAsStr = "{0[0]}, {0[1]}\n{0[2]}\n{0[3]}\n{0[4]}\n".format(classInfoList)
-    print(infoAsStr)
+    return infoAsStr
     f.close()
 
 def gradingInfo(fileIn):
@@ -128,6 +128,7 @@ def stats():
             break
         elif reply == 'S' or reply == 's':
             print(classInfo(inputFile))
+            # The column headers in the output must be “Id”, “Hws”, “Quizzes”, “Exams”, “Total”, “Grade”.
     
 def main():
     global inputFile; inputFile = "gradesS.in"
