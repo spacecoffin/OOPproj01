@@ -38,7 +38,9 @@ def gradingInfo(fileIn):
             gradeInfoList.append(numInts[0]) #I should probably add a safety check like an 'isnum' here
             gradeInfoList.append(numInts[1])
             x -= 1
-    return gradeInfoList # I feel like extracting these values for use in a dictionary that would be returned would be overkill for this program.
+    gradeInfoDict = dict(zip(['numHws', 'weightHws', 'numQuizzes', 'weightQuizzes', 'numExams', 'weightExams'], gradeInfoList))
+    return gradeInfoDict # I feel like extracting these values for use in a dictionary that would be returned would be overkill for this program.
+    # 0:#ofHWs, 1:WeightOfHWs, 2:#ofQuizzes, 3:WeightOfQuizzes, 4:#ofExams, 5:WeightofExams
     # Should an exception be raised if the weight of each type of work does not add up to 100?
     f.close()
 
@@ -109,6 +111,9 @@ def studentScores(fileIn):
             elif achar.isspace():
                 continue
         gradesList.append(agradeList)
+    numsWeights = gradingInfo(fileIn)
+    print(numsWeights)
+    #
     return list(zip(names, ssns, opts, posts, gradesList))
         # Information fields about the students should be pulled from left to right.
         # To pull the names: Read the str pulled from the io from left to right, char by char. Create a new string for the student's name. Read a char then check if it is a number. If it is not, append it to the string (to later be appended to a list of all the student's info). If it is a number, strip the string using strip(), create a new sting for the student's SSN and append it to that.
@@ -132,14 +137,19 @@ def stats():
                 dashes = dashes + '-'
                 i -= 1
             print(dashes)
+            # Run through each student's data
+            # 1- Only display if 'post' is 'Y'
+            # 2- Copy last 4 of 'SSN' to a var
+            # 3- STOPPING HERE TO ADD GRADE CALCULATION TO studentScores function
             
     
 def main():
     global inputFile; inputFile = "gradesS.in"
     classInfo(inputFile)
+    print(classInfo(inputFile))
     gradingInfo(inputFile)
     studentScores(inputFile)
-    print(studentScores(inputFile))
+    # print(studentScores(inputFile))
     stats()
 
 main()
