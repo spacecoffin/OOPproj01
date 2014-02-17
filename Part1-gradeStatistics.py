@@ -39,21 +39,38 @@ def gradingInfo(fileIn):
             gradeInfoList.append(numInts[1])
             x -= 1
     gradeInfoDict = dict(zip(['numHws', 'weightHws', 'numQuizzes', 'weightQuizzes', 'numExams', 'weightExams'], gradeInfoList))
-    return gradeInfoDict # I feel like extracting these values for use in a dictionary that would be returned would be overkill for this program.
-    # 0:#ofHWs, 1:WeightOfHWs, 2:#ofQuizzes, 3:WeightOfQuizzes, 4:#ofExams, 5:WeightofExams
+    return gradeInfoDict
     # Should an exception be raised if the weight of each type of work does not add up to 100?
     f.close()
 
 def studentScores(fileIn):
     #studentScores - This function should process the remainder of the file. You may want to compute the letter grade of each student while processing the scores. This can be made as a nested function.
     f = open(fileIn, 'r')
+    headerList = []
     x = 0
     while x < 1:
         line = f.readline()
         line = line.casefold()
         if "name" and "ssn" in line:
+            i = 0
+            hchar = line[i]
+            while i < len(line):
+                if hchar.isalpha():
+                    while hchar.isalpha():
+                        aheader = aheader + hchar
+                        i += 1
+                        hchar = line[i]
+                    headerList.append(aheader)
+                    aheader = ''
+                elif hchar.isnumeric():
+                    i += 1
+                    hchar = line[i]
+                elif hchar.isspace():
+                    i += 1
+                    hchar = line[i]
             x += 1
             line = f.readline()
+    print(headerList)
     achar = 'a'
     names = []
     ssns = []
@@ -111,9 +128,8 @@ def studentScores(fileIn):
             elif achar.isspace():
                 continue
         gradesList.append(agradeList)
-    numsWeights = gradingInfo(fileIn)
-    print(numsWeights)
-    #
+    gradingDict = gradingInfo(fileIn)
+    
     return list(zip(names, ssns, opts, posts, gradesList))
         # Information fields about the students should be pulled from left to right.
         # To pull the names: Read the str pulled from the io from left to right, char by char. Create a new string for the student's name. Read a char then check if it is a number. If it is not, append it to the string (to later be appended to a list of all the student's info). If it is a number, strip the string using strip(), create a new sting for the student's SSN and append it to that.
