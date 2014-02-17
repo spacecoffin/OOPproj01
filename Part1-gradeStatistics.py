@@ -54,10 +54,8 @@ def studentScores(fileIn):
         if "name" and "ssn" in line:
             i = 0
             hchar = line[i]
-            print(len(line))
             aheader = ''
             while i < len(line):
-                print(i)
                 hchar = line[i]
                 if hchar.isalpha():
                     while hchar.isalpha():
@@ -129,10 +127,53 @@ def studentScores(fileIn):
                 agrade = ''
             elif achar.isspace():
                 continue
-        gradesList.append(agradeList)
-    gradingDict = gradingInfo(fileIn)
-    
-    return list(zip(names, ssns, opts, posts, gradesList))
+        def gradeProcessing(agradeList):
+        # Add check that numX of assignment type X from gradingInfo matches the number of headers for that type of assignment.
+            gradingDict = gradingInfo(fileIn)
+            i = 0
+            hwTotal = 0
+            quizTotal = 0
+            examTotal = 0
+            while i < len(agradeList):
+                field = headerList[i+4]
+                if 'hw' in field:
+                    hwTotal = hwTotal + agradeList[i]
+                elif 'quiz' in field:
+                    quizTotal = quizTotal + agradeList[i]
+                elif 'exam' in field:
+                    examTotal = examTotal + agradeList[i]
+                i += 1
+            hwGrade = round((hwTotal / gradingDict['numHws']) * (gradingDict['weightHws'] * 0.01), 2)
+            examGrade = round((examTotal / gradingDict['numExams']) * (gradingDict['weightExams'] * 0.01), 2)
+            if gradingDict['numQuizzes'] < 1:
+                numGrade = hwGrade + examGrade
+                quizGrade = '-1.00'
+            else:
+                quizGrade = round((quizTotal / gradingDict['numQuizzes']) * (gradingDict['weightQuizzes'] * 0.01), 2)
+                numGrade = round(hwGrade + examGrade + quizGrade)
+            if numGrade >= 90:
+                letterGrade = 'A'
+            elif numGrade >= 80:
+                letterGrade = 'B'
+            elif numGrade >= 70:
+                letterGrade = 'C'
+            elif numGrade >= 60:
+                letterGrade = 'D'
+            else:
+                letterGrade = 'F'
+            return list(hwGrade, quizGrade, examGrade, numGrade, letterGrade)
+        hwGrades = []
+        quizGrades = []
+        examGrades = []
+        numGrades = []
+        letterGrades = []
+        gradesList = gradeProcessing(agradeList)
+        hwGrades.append(gradesList[0])
+        quizGrades.append(gradesList[1])
+        examGrades.append(gradesList[2])
+        numGrades.append(gradesList[3])
+        letterGrades.append(gradesList[4])
+    return list(zip(names, ssns, opts, posts, hwGrades, quizGrades, examGrades, numGrades, letterGrades))
         # Information fields about the students should be pulled from left to right.
         # To pull the names: Read the str pulled from the io from left to right, char by char. Create a new string for the student's name. Read a char then check if it is a number. If it is not, append it to the string (to later be appended to a list of all the student's info). If it is a number, strip the string using strip(), create a new sting for the student's SSN and append it to that.
     f.close()
@@ -154,17 +195,15 @@ def stats():
             while i > 0:
                 dashes = dashes + '-'
                 i -= 1
-            print(dashes)
             # Run through each student's data
             # 1- Only display if 'post' is 'Y'
             # 2- Copy last 4 of 'SSN' to a var
             # 3- STOPPING HERE TO ADD GRADE CALCULATION TO studentScores function
-            
+            print(dashes)
     
 def main():
     global inputFile; inputFile = "gradesS.in"
     classInfo(inputFile)
-    print(classInfo(inputFile))
     gradingInfo(inputFile)
     studentScores(inputFile)
     print(studentScores(inputFile))
