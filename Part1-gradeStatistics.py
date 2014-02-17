@@ -54,7 +54,11 @@ def studentScores(fileIn):
         if "name" and "ssn" in line:
             i = 0
             hchar = line[i]
+            print(len(line))
+            aheader = ''
             while i < len(line):
+                print(i)
+                hchar = line[i]
                 if hchar.isalpha():
                     while hchar.isalpha():
                         aheader = aheader + hchar
@@ -64,10 +68,8 @@ def studentScores(fileIn):
                     aheader = ''
                 elif hchar.isnumeric():
                     i += 1
-                    hchar = line[i]
                 elif hchar.isspace():
                     i += 1
-                    hchar = line[i]
             x += 1
             line = f.readline()
     print(headerList)
@@ -165,7 +167,7 @@ def main():
     print(classInfo(inputFile))
     gradingInfo(inputFile)
     studentScores(inputFile)
-    # print(studentScores(inputFile))
+    print(studentScores(inputFile))
     stats()
 
 main()
