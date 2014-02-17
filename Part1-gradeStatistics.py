@@ -148,13 +148,13 @@ def studentScores(fileIn):
                     examTotal = examTotal + agradeList[i]
                 i += 1
             # THE ROUNDING SHOULD BE MOVED TO THE STATS FUNCTION WHERE THE NUMBERS ARE PRINTED
-            hwGrade = round((hwTotal / gradingDict['numHws']) * (gradingDict['weightHws'] * 0.01), 2)
-            examGrade = round((examTotal / gradingDict['numExams']) * (gradingDict['weightExams'] * 0.01), 2)
+            hwGrade = (hwTotal / gradingDict['numHws']) * (gradingDict['weightHws'] * 0.01)
+            examGrade = (examTotal / gradingDict['numExams']) * (gradingDict['weightExams'] * 0.01)
             if gradingDict['numQuizzes'] < 1:
                 numGrade = round(hwGrade + examGrade)
                 quizGrade = '-1.00'
             else:
-                quizGrade = round((quizTotal / gradingDict['numQuizzes']) * (gradingDict['weightQuizzes'] * 0.01), 2)
+                quizGrade = (quizTotal / gradingDict['numQuizzes']) * (gradingDict['weightQuizzes'] * 0.01)
                 numGrade = round(hwGrade + examGrade + quizGrade)
             if numGrade >= 90:
                 letterGrade = 'A'
