@@ -152,7 +152,7 @@ def studentScores(fileIn):
             examGrade = (examTotal / gradingDict['numExams']) * (gradingDict['weightExams'] * 0.01)
             if gradingDict['numQuizzes'] < 1:
                 numGrade = round(hwGrade + examGrade)
-                quizGrade = '-1.00'
+                quizGrade = -1
             else:
                 quizGrade = (quizTotal / gradingDict['numQuizzes']) * (gradingDict['weightQuizzes'] * 0.01)
                 numGrade = round(hwGrade + examGrade + quizGrade)
@@ -175,9 +175,7 @@ def studentScores(fileIn):
         letterGrades.append(gradesList[4])
     o = 0
     while o < len(opts):
-        print(opts[o])
-        print(letterGrades[o])
-        if 'P' in opts[o]: # keep having trouble with these string equivalences
+        if 'P/F' in opts[o]: # keep having trouble with these string equivalences
             if letterGrades[o] in ('A', 'B', 'C'):
                 letterGrades[o] = 'P'
             elif letterGrades[o] in ('D', 'F'):
@@ -192,9 +190,20 @@ def studentScores(fileIn):
 def stats():
     #This function should output information based on user input. You may want to have nested functions that are invoked for different user inputs.
     reply = 'x'
+    gradeData = studentScores(inputFile)
+    def highLowAvg(gradeData):
+        s = 0
+        totalList = []
+        while s < len(gradeData):
+            if 'AUD' not in gradeData[s][2]:
+                totalList.append(gradeData[s][7])
+            s += 1
+        totalList = sorted(totalList)
+        hiLoAvg = []
+        hiLoAvg.extend([totalList[-1], totalList[0], sum(totalList) / len(totalList)])
+        return hiLoAvg
     while reply:
         reply = input('(S)ummarize, (F)ull Display, (R)ange, or (Q)uit: ')
-        reply = reply.casefold()
         if reply == 'Q' or reply == 'q':
             break
         elif reply == 'S' or reply == 's':
@@ -206,17 +215,21 @@ def stats():
             while i > 0:
                 dashes = dashes + '-'
                 i -= 1
-            # Run through each student's data
-            # 1- Only display if 'post' is 'Y'
-            # 2- Copy last 4 of 'SSN' to a var
-            # 3- STOPPING HERE TO ADD GRADE CALCULATION TO studentScores function
             print(dashes)
-    
+            # while loop for printing <student grades>
+            i = 0
+            # loop for length of list, incrementing i each time. i is then used as an index for querying each student's information tuple from the gradeData list while the index for the needed field of student information is hardcoded.
+            while i < len(gradeData):
+                if 'Y' in gradeData[i][3]:
+                    print("{0}\t{1:.2f}\t{2:.2f}\t{3:.2f}\t{4}\t{5}".format(gradeData[i][1][-4:], round(gradeData[i][4], 2), round(gradeData[i][5], 2), round(gradeData[i][6], 2), gradeData[i][7], gradeData[i][8]))
+                i += 1
+            totalStats = highLowAvg(gradeData)
+            print("Highest:\t\t\t{}\nLowest:\t\t\t\t{}\nAverage:\t\t\t{:>.2f}".format(totalStats[0], totalStats[1], totalStats[2]))
+                  
 def main():
     global inputFile; inputFile = "gradesS.in"
     classInfo(inputFile)
     gradingInfo(inputFile)
-    studentScores(inputFile)
     print(studentScores(inputFile))
     stats()
 
