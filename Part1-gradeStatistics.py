@@ -208,22 +208,17 @@ def stats():
             break
         elif reply == 'S' or reply == 's':
             print(classInfo(inputFile))
-            print("{}{:>10}{:>12}{:>10}{:>10}{:>12}".format('Id', 'Hws', 'Quizzes', 'Exams', 'Total', 'Grade'))
-            dashes = ''
-            i = 45 # temporary solution for appropriate length of dash line, accounting for each field delimited by a tab as 8 spaces and adding 5 more for each char in 'Grade'.
-            while i > 0:
-                dashes = dashes + '-'
-                i -= 1
-            print(dashes)
+            print("{:<4}{:^13}{:^7}{:^15}{:^5}      {:^7}".format('Id', 'Hws', 'Quizzes', 'Exams', 'Total', 'Grade'))
+            print('{:<}'.format('-' * 57))
             # while loop for printing <student grades>
             i = 0
             # loop for length of list, incrementing i each time. i is then used as an index for querying each student's information tuple from the gradeData list while the index for the needed field of student information is hardcoded.
             while i < len(gradeData):
                 if 'Y' in gradeData[i][3]:
-                    print("{0}\t{1:.2f}\t{2:.2f}\t{3:.2f}\t{4}\t{5}".format(gradeData[i][1][-4:], round(gradeData[i][4], 2), round(gradeData[i][5], 2), round(gradeData[i][6], 2), gradeData[i][7], gradeData[i][8]))
+                    print("{:<4}{:^13.2f}{:^7.2f}{:^15.2f}{:^6}     {:^7}".format(gradeData[i][1][-4:], round(gradeData[i][4], 2), round(gradeData[i][5], 2), round(gradeData[i][6], 2), gradeData[i][7], gradeData[i][8]))
                 i += 1
             totalStats = highLowAvg(gradeData)
-            print("Highest:\t\t\t{}\nLowest:\t\t\t\t{}\nAverage:\t\t\t{:>.2f}".format(totalStats[0], totalStats[1], totalStats[2]))
+            print("\n{:<38}{:>5}\n{:<38}{:>5}\n{:<38}{:>5.2f}".format('Highest:', totalStats[0], 'Lowest:', totalStats[1],'Average:', totalStats[2]))
                   
 def main():
     global inputFile; inputFile = "gradesS.in"
