@@ -208,8 +208,7 @@ def stats():
             break
         elif reply == 'S' or reply == 's':
             print(classInfo(inputFile))
-            headers = 'Id\tHws\tQuizzes\tExams\tTotal\tGrade'
-            print(headers)
+            print("{}{:>10}{:>12}{:>10}{:>10}{:>12}".format('Id', 'Hws', 'Quizzes', 'Exams', 'Total', 'Grade'))
             dashes = ''
             i = 45 # temporary solution for appropriate length of dash line, accounting for each field delimited by a tab as 8 spaces and adding 5 more for each char in 'Grade'.
             while i > 0:
@@ -228,9 +227,6 @@ def stats():
                   
 def main():
     global inputFile; inputFile = "gradesS.in"
-    classInfo(inputFile)
-    gradingInfo(inputFile)
-    print(studentScores(inputFile))
     stats()
 
 main()
