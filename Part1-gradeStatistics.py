@@ -245,10 +245,6 @@ def stats():
                                 print(gradeData[i][0])
                         i += 1
                     break
-            
-            
-
-
 
 def main():
     global inputFile; inputFile = "gradesS.in"
