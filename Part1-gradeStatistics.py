@@ -233,9 +233,18 @@ def stats():
             totalStats = highLowAvg(gradeData)
             print("\n{:<57}{:>5}\n{:<57}{:>5}\n{:<57}{:>5.2f}".format('Highest:', totalStats[0], 'Lowest:', totalStats[1],'Average:', totalStats[2]))
         elif reply == 'R' or reply == 'r':
-            scoreRange = inputint(('Enter the range separated by \',\': '))
-            rangeList = sorted(scoreRange.split(',', 1))
-            print(rangeList)
+            while True:
+                scoreRange = sorted(list(map(int, input('Enter the range separated by \',\': ').split(','))))
+                if len(scoreRange) != 2:
+                    continue
+                else:
+                    i = 0
+                    while i < len(gradeData):
+                        if not 'AUD' in gradeData[i][2]:
+                            if gradeData[i][7] >= scoreRange[0] and gradeData[i][7] <= scoreRange[1]:
+                                print(gradeData[i][0])
+                        i += 1
+                    break
             
             
 
