@@ -192,8 +192,8 @@ def stats():
     reply = 'x'
     gradeData = studentScores(inputFile)
     def highLowAvg(gradeData):
-        s = 0
         totalList = []
+        s = 0
         while s < len(gradeData):
             if 'AUD' not in gradeData[s][2]:
                 totalList.append(gradeData[s][7])
@@ -219,7 +219,28 @@ def stats():
                 i += 1
             totalStats = highLowAvg(gradeData)
             print("\n{:<38}{:>5}\n{:<38}{:>5}\n{:<38}{:>5.2f}".format('Highest:', totalStats[0], 'Lowest:', totalStats[1],'Average:', totalStats[2]))
-                  
+        elif reply == 'F' or reply == 'f':
+            print(classInfo(inputFile))
+            print("{:<19}{:^4}{:^13}{:^7}{:^15}{:^5}      {:^7}".format('Name', 'Id', 'Hws', 'Quizzes', 'Exams', 'Total', 'Grade'))
+            print('{:<}'.format('-' * 76))
+            # while loop for printing <student grades>
+            i = 0
+            # loop for length of list, incrementing i each time. i is then used as an index for querying each student's information tuple from the gradeData list while the index for the needed field of student information is hardcoded.
+            while i < len(gradeData):
+                if not 'AUD' in gradeData[i][2]:
+                    print("{:<19}{:^4}{:^13.2f}{:^7.2f}{:^15.2f}{:^6}     {:^7}".format(gradeData[i][0], gradeData[i][1][-4:], round(gradeData[i][4], 2), round(gradeData[i][5], 2), round(gradeData[i][6], 2), gradeData[i][7], gradeData[i][8]))
+                i += 1
+            totalStats = highLowAvg(gradeData)
+            print("\n{:<57}{:>5}\n{:<57}{:>5}\n{:<57}{:>5.2f}".format('Highest:', totalStats[0], 'Lowest:', totalStats[1],'Average:', totalStats[2]))
+        elif reply == 'R' or reply == 'r':
+            scoreRange = inputint(('Enter the range separated by \',\': '))
+            rangeList = sorted(scoreRange.split(',', 1))
+            print(rangeList)
+            
+            
+
+
+
 def main():
     global inputFile; inputFile = "gradesS.in"
     stats()
