@@ -1,11 +1,6 @@
-#CS 113 Homework Assignment 1
-#Due: February 16, 2014
-#Reed Rosenberg
-#UPDATE TO PROPER DOCUMENTATION
-
 def classInfo(fileIn):
-    #classInfo - This function will process the first five lines of the input file that gives information about the course.
-    #fileIn should be passed the name of the file to be operated on (preceded by its path if it is not within either the current working directory or the search path)
+    # classInfo - This function will process the first five lines of the input file that gives information about the course.
+    # fileIn should be passed the name of the file to be operated on (preceded by its path if it is not within either the current working directory or the search path)
     f = open(fileIn, 'r')
     classInfoList = []
     x = 5
@@ -20,9 +15,9 @@ def classInfo(fileIn):
     f.close()
 
 def gradingInfo(fileIn):
-    #gradingInfo - This function should process the three lines in the input file that contain information about the numbers and weights of homeworks, quizzes, and exams.
+    # gradingInfo - This function should process the three lines in the input file that contain information about the numbers and weights of homeworks, quizzes, and exams.
     f = open(fileIn, 'r')
-    #Begin reading at appropriate line and perform same readline & split at ':', but then take parts[1], split it again at ',' then convert the remaining parts into ints. Store the ints in a list to later be returned by the function.
+    # Begin reading at appropriate line and perform same readline & split at ':', but then take parts[1], split it again at ',' then convert the remaining parts into ints. Store the ints in a list to later be returned by the function.
     gradeInfoList = []
     x = 3
     y = 0
@@ -35,12 +30,11 @@ def gradingInfo(fileIn):
             numStr = parts[1]
             numList = numStr.split(',', 1)
             numInts = [int(i) for i in numList]
-            gradeInfoList.append(numInts[0]) #I should probably add a safety check like an 'isnum' here
+            gradeInfoList.append(numInts[0])
             gradeInfoList.append(numInts[1])
             x -= 1
     gradeInfoDict = dict(zip(['numHws', 'weightHws', 'numQuizzes', 'weightQuizzes', 'numExams', 'weightExams'], gradeInfoList))
     return gradeInfoDict
-    # Should an exception be raised if the weight of each type of work does not add up to 100?
     f.close()
 
 def studentScores(fileIn):
@@ -132,7 +126,6 @@ def studentScores(fileIn):
             elif achar.isspace():
                 continue
         def gradeProcessing(agradeList):
-        # Add check that numX of assignment type X from gradingInfo matches the number of headers for that type of assignment.
             gradingDict = gradingInfo(fileIn)
             i = 0
             hwTotal = 0
@@ -147,7 +140,6 @@ def studentScores(fileIn):
                 elif 'exam' in field:
                     examTotal = examTotal + agradeList[i]
                 i += 1
-            # THE ROUNDING SHOULD BE MOVED TO THE STATS FUNCTION WHERE THE NUMBERS ARE PRINTED
             hwGrade = (hwTotal / gradingDict['numHws']) * (gradingDict['weightHws'] * 0.01)
             examGrade = (examTotal / gradingDict['numExams']) * (gradingDict['weightExams'] * 0.01)
             if gradingDict['numQuizzes'] < 1:
@@ -188,7 +180,7 @@ def studentScores(fileIn):
     f.close()
 
 def stats():
-    #This function should output information based on user input. You may want to have nested functions that are invoked for different user inputs.
+    # This function should output information based on user input.
     reply = 'x'
     gradeData = studentScores(inputFile)
     def highLowAvg(gradeData):
@@ -247,7 +239,7 @@ def stats():
                     break
 
 def main():
-    global inputFile; inputFile = "gradesS.in"
+    global inputFile; inputFile = "grades.in"
     stats()
 
 main()
