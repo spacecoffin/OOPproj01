@@ -3,13 +3,18 @@ def classInfo(fileIn):
     # fileIn should be passed the name of the file to be operated on (preceded by its path if it is not within either the current working directory or the search path)
     f = open(fileIn, 'r')
     classInfoList = []
-    x = 5
+    for x in range(5):
+        line = f.readline()
+        parts = line.split(':', 1)
+        field = parts[1] # convert to a string so that it can be stripped of leading and trailing whitespace in the line of code below
+        classInfoList.append(field.strip())
+    """x = 5
     while x > 0:
         line = f.readline()
         parts = line.split(':', 1)
         field = parts[1] # convert to a string so that it can be stripped of leading and trailing whitespace in the line of code below
         classInfoList.append(field.strip())
-        x -= 1
+        x -= 1"""
     infoAsStr = "{0[0]}, {0[1]}\n{0[2]}\n{0[3]}\n{0[4]}\n".format(classInfoList)
     return infoAsStr
     f.close()
@@ -44,7 +49,7 @@ def studentScores(fileIn):
     x = 0
     while x < 1:
         line = f.readline()
-        line = line.casefold()
+        line = line.lower() # Changed from str.casefold() (New in Python 3.3) to str.lower() for backward compatibility.
         if "name" and "ssn" in line:
             i = 0
             hchar = line[i]
