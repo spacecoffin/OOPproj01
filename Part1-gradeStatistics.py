@@ -40,14 +40,15 @@ def gradingInfo(fileIn):
 def studentScores(fileIn):
     #studentScores - This function should process the remainder of the file. You may want to compute the letter grade of each student while processing the scores. This can be made as a nested function.
     openObj = open(fileIn, 'r')
-
+    
+    # This nested function identifies the line that contains the file's headers and creates a list of those headers to be used for later processing.
     def makeHeaders(openObj):
         headers = []
         x = 0
         while x < 1:
             line = openObj.readline()
             line = line.lower() # UPDATED: Changed from str.casefold() (New in Python 3.3) to str.lower() for backward compatibility.
-            if "name" and "ssn" in line:
+            if "name" and "ssn" in line: # This is the line identification condition as per provided input.
                 i = 0
                 hchar = line[i]
                 aheader = ''
@@ -70,6 +71,7 @@ def studentScores(fileIn):
     
     headerList = makeHeaders(openObj)
     
+    # Mass declaration of variables needed for use at many variously nested points of the function.
     achar = ' '
     names = []
     ssns = []
@@ -82,24 +84,19 @@ def studentScores(fileIn):
     numGrades = []
     letterGrades = []
     
+    # This is the main loop that scans each line of student information and properly stores and itemizes it for later processing.
     while achar:
-        print("We're at the top")
-        print("\"{}\"".format(achar))
         aname = ''
-        print("\"{}\": Right above previous error".format(achar))
         while not achar.isnumeric():
             aname = aname + achar
             achar = openObj.read(1)
-
         aname = aname.strip()
-        print(aname)
         assn = ''
         y = 11
         while y > 0:
             assn = assn + achar
             achar = openObj.read(1)
             y -= 1
-        print(assn)
         aopt = ''
         while achar.isspace():
             achar = openObj.read(1)
@@ -108,9 +105,8 @@ def studentScores(fileIn):
             aopt = aopt + achar
             achar = openObj.read(1)
             z -= 1
-        print(aopt)
         apost = ''
-        if 'F' in aopt:
+        if 'F' in aopt: # Only information for students who are receiving either a letter grade or a pass/fail needs to be processed. Once that field is read for a student by the above loops, the code nested within this condition can perform the necessary storage and itemization tasks.
             while achar.isspace():
                 achar = openObj.read(1)
             apost = achar
@@ -122,7 +118,7 @@ def studentScores(fileIn):
             agrade = ''
             anumgrade = 0
             agradeList = []
-            while achar != '\n':
+            while achar != '\n': # Grades can appear from anywhere after the line's 'Post' field until the end of the line.
                 achar = openObj.read(1)
                 if not achar:
                     break
@@ -135,23 +131,22 @@ def studentScores(fileIn):
                     agrade = ''
                 elif achar.isspace():
                     continue
-                
+            
+            # This nested function plugs each student's grades into the grading formula then derives and stores the appropriate letter grade.
             def gradeProcessing(agradeList):
                 gradingDict = gradingInfo(fileIn)
                 i = 0
                 hwTotal = 0
                 quizTotal = 0
                 examTotal = 0
-                print("{} in grading".format(aname))
                 discrepancy = len(agradeList) - (len(headerList) - 4)
-                print(discrepancy)
-                if discrepancy > 0:
-                    print("The number of grades does not match the number of headers for student {}!".format(aname))
+                if discrepancy > 0: # This condition and its application in the while loop below account for the existence of extra grades.
+                    print("\n{0} grade(s) exist for student {1} that do not have a header to specify their assignment type!\nThe first {0} grade(s) from the right hand side of the line have been ommitted.".format(discrepancy, aname))
                 while (i + discrepancy) < len(agradeList):
                     field = headerList[i+4]
                     if 'hw' in field:
                         hwTotal = hwTotal + agradeList[i]
-                    elif 'qz' in field:
+                    elif 'qz' in field: # UPDATE: Changed 'quiz' to 'qz' per input provided.
                         quizTotal = quizTotal + agradeList[i]
                     elif 'exam' in field:
                         examTotal = examTotal + agradeList[i]
@@ -182,22 +177,25 @@ def studentScores(fileIn):
             numGrades.append(gradesList[3])
             letterGrades.append(gradesList[4])
             achar = openObj.read(1)
+            while achar.isspace():
+                achar = openObj.read(1)
             continue
+        
         if 'UD' in aopt:
             while achar != '\n':
                 achar = openObj.read(1)
-            print("{} ain't being graded".format(aname))
-            achar = openObj.read(1)
+            while achar.isspace():
+                achar = openObj.read(1)
             continue
-    print("We're about to PassFail")
-    print(list(opts))
+    
+    # This loop converts letter grades to their Pass/Fail equivalent for the appropriate students.    
     for i in range(len(opts)):
-        print("We're PassFailing")
         if 'P/F' in opts[i]:
             if letterGrades[i] in ('A', 'B', 'C'):
                 letterGrades[i] = 'P'
             elif letterGrades[i] in ('D', 'F'):
                 letterGrades[i] = 'F'
+                
     return list(zip(names, ssns, opts, posts, hwGrades, quizGrades, examGrades, numGrades, letterGrades))
         # Information fields about the students should be pulled from left to right.
         # To pull the names: Read the str pulled from the io from left to right, char by char. Create a new string for the student's name. Read a char then check if it is a number. If it is not, append it to the string (to later be appended to a list of all the student's info). If it is a number, strip the string using strip(), create a new sting for the student's SSN and append it to that.
