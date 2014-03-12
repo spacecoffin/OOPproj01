@@ -147,7 +147,7 @@ def studentScores(fileIn):
                     field = headerList[i+4]
                     if 'hw' in field:
                         hwTotal = hwTotal + agradeList[i]
-                    elif 'quiz' in field:
+                    elif 'qz' in field:
                         quizTotal = quizTotal + agradeList[i]
                     elif 'exam' in field:
                         examTotal = examTotal + agradeList[i]
@@ -178,7 +178,7 @@ def studentScores(fileIn):
             numGrades.append(gradesList[3])
             letterGrades.append(gradesList[4])
         if 'UD' in aopt:
-            while achar is not '\n':
+            while achar != '\n':
                 achar = openObj.read(1)
             continue
     for i in range(len(opts)):
