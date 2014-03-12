@@ -39,31 +39,37 @@ def gradingInfo(fileIn):
 
 def studentScores(fileIn):
     #studentScores - This function should process the remainder of the file. You may want to compute the letter grade of each student while processing the scores. This can be made as a nested function.
-    f = open(fileIn, 'r')
-    headerList = []
-    x = 0
-    while x < 1:
-        line = f.readline()
-        line = line.lower() # Changed from str.casefold() (New in Python 3.3) to str.lower() for backward compatibility.
-        if "name" and "ssn" in line:
-            i = 0
-            hchar = line[i]
-            aheader = ''
-            while i < len(line):
+    openObj = open(fileIn, 'r')
+
+    def makeHeaders(openObj):
+        headers = []
+        x = 0
+        while x < 1:
+            line = openObj.readline()
+            line = line.lower() # UPDATED: Changed from str.casefold() (New in Python 3.3) to str.lower() for backward compatibility.
+            if "name" and "ssn" in line:
+                i = 0
                 hchar = line[i]
-                if hchar.isalpha():
-                    while hchar.isalpha():
-                        aheader = aheader + hchar
+                aheader = ''
+                while i < len(line):
+                    hchar = line[i]
+                    if hchar.isalpha():
+                        while hchar.isalpha():
+                            aheader = aheader + hchar
+                            i += 1
+                            hchar = line[i]
+                        headers.append(aheader)
+                        aheader = ''
+                    elif hchar.isnumeric():
                         i += 1
-                        hchar = line[i]
-                    headerList.append(aheader)
-                    aheader = ''
-                elif hchar.isnumeric():
-                    i += 1
-                elif hchar.isspace():
-                    i += 1
-            x += 1
-            line = f.readline()
+                    elif hchar.isspace():
+                        i += 1
+                x += 1
+                line = openObj.readline() # This is to force the program to read the dashed separator line so that when information is read from the file to the io buffer again, it picks up reading again after the separator.
+        return list(headers)
+    
+    headerList = makeHeaders(openObj)
+    
     achar = 'a'
     names = []
     ssns = []
@@ -75,51 +81,56 @@ def studentScores(fileIn):
     examGrades = []
     numGrades = []
     letterGrades = []
+    
     while achar:
         achar = ''
         aname = ''
         while not achar.isnumeric():
             aname = aname + achar
-            achar = f.read(1)
+            try:
+                achar = openObj.read(1)
+            except EOFError:
+                break
+        try:
+            achar = openObj.read(1)
+        except EOFError:
+            continue
         aname = aname.strip()
-        #names.append(aname)
         assn = ''
         y = 11
         while y > 0:
             assn = assn + achar
-            achar = f.read(1)
+            achar = openObj.read(1)
             y -= 1
-        #ssns.append(assn)
         aopt = ''
         while achar.isspace():
-            achar = f.read(1)
+            achar = openObj.read(1)
         z = 3
         while z > 0:
             aopt = aopt + achar
-            achar = f.read(1)
+            achar = openObj.read(1)
             z -= 1
-        #opts.append(aopt)
         apost = ''
         if 'F' in aopt:
             while achar.isspace():
-                achar = f.read(1)
+                achar = openObj.read(1)
             apost = achar
             names.append(aname)
             ssns.append(assn)
             opts.append(aopt)
             posts.append(apost)
-            achar = f.read(1)
+            achar = openObj.read(1)
             agrade = ''
             anumgrade = 0
             agradeList = []
-            while achar is not '\n':
-                achar = f.read(1)
+            while achar != '\n':
+                achar = openObj.read(1)
                 if not achar:
                     break
                 if achar.isnumeric():
                     while achar.isnumeric():
                         agrade = agrade + achar
-                        achar = f.read(1)
+                        achar = openObj.read(1)
                     anumgrade = int(agrade)
                     agradeList.append(anumgrade)
                     agrade = ''
@@ -168,7 +179,7 @@ def studentScores(fileIn):
             letterGrades.append(gradesList[4])
         if 'UD' in aopt:
             while achar is not '\n':
-                achar = f.read(1)
+                achar = openObj.read(1)
             continue
     for i in range(len(opts)):
         if 'P/F' in opts[i]:
