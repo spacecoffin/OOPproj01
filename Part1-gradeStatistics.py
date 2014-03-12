@@ -10,7 +10,7 @@ def classInfo(fileIn):
         parts = line.split(':', 1)
         field = parts[1] # convert to a string so that it can be stripped of leading and trailing whitespace in the line of code below
         classInfoList.append(field.strip())
-    infoAsStr = "{0[0]}, {0[1]}\n{0[2]}\n{0[3]}\n{0[4]}\n".format(classInfoList)
+    infoAsStr = "\n{0[0]}, {0[1]}\n{0[2]}\n{0[3]}\n{0[4]}\n".format(classInfoList)
     return infoAsStr
     f.close()
 
@@ -234,7 +234,7 @@ def stats():
                     print("{:<4}{:^13.2f}{:^7.2f}{:^15.2f}{:^6}     {:^7}".format(gradeData[i][1][-4:], round(gradeData[i][4], 2), round(gradeData[i][5], 2), round(gradeData[i][6], 2), gradeData[i][7], gradeData[i][8]))
                 i += 1
             totalStats = highLowAvg(gradeData)
-            print("\n{:<38}{:>5}\n{:<38}{:>5}\n{:<38}{:>5.2f}".format('Highest:', totalStats[0], 'Lowest:', totalStats[1],'Average:', totalStats[2]))
+            print("\n{:<38}{:>5}\n{:<38}{:>5}\n{:<38}{:>5.2f}\n".format('Highest:', totalStats[0], 'Lowest:', totalStats[1],'Average:', totalStats[2]))
         elif reply == 'F' or reply == 'f':
             print(classInfo(inputFile))
             print("{:<19}{:^4}{:^13}{:^7}{:^15}{:^5}      {:^7}".format('Name', 'Id', 'Hws', 'Quizzes', 'Exams', 'Total', 'Grade'))
@@ -247,13 +247,24 @@ def stats():
                     print("{:<19}{:^4}{:^13.2f}{:^7.2f}{:^15.2f}{:^6}     {:^7}".format(gradeData[i][0], gradeData[i][1][-4:], round(gradeData[i][4], 2), round(gradeData[i][5], 2), round(gradeData[i][6], 2), gradeData[i][7], gradeData[i][8]))
                 i += 1
             totalStats = highLowAvg(gradeData)
-            print("\n{:<57}{:>5}\n{:<57}{:>5}\n{:<57}{:>5.2f}".format('Highest:', totalStats[0], 'Lowest:', totalStats[1],'Average:', totalStats[2]))
+            print("\n{:<57}{:>5}\n{:<57}{:>5}\n{:<57}{:>5.2f}\n".format('Highest:', totalStats[0], 'Lowest:', totalStats[1],'Average:', totalStats[2]))
         elif reply == 'R' or reply == 'r':
             while True:
-                scoreRange = sorted(list(map(int, input('Enter the range separated by \',\': ').split(','))))
+                try:
+                    scoreRange = sorted(list(map(int, input('\nEnter the range separated by \',\': ').split(','))))
+                except ValueError:
+                    print("\nThe input was not in the specified format. Please try again.")
+                    continue
                 if len(scoreRange) != 2:
+                    print("\nPlease enter 2 scores separated by a comma.")
                     continue
                 else:
+                    i = 0
+                    while i < len(gradeData):
+                        if not 'AUD' in gradeData[i][2]:
+                            if gradeData[i][7] >= scoreRange[0] and gradeData[i][7] <= scoreRange[1]:
+                                i += 1
+                    else: print("{} student(s) have total score between {} and {}.".format(i, scoreRange[0], scoreRange[1]))
                     i = 0
                     while i < len(gradeData):
                         if not 'AUD' in gradeData[i][2]:
