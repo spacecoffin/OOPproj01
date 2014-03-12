@@ -3,18 +3,13 @@ def classInfo(fileIn):
     # fileIn should be passed the name of the file to be operated on (preceded by its path if it is not within either the current working directory or the search path)
     f = open(fileIn, 'r')
     classInfoList = []
+    # UPDATE: Changed from a while loop to a for loop for readability.
+    # Eliminates need for declaring 'x' variable outside of the loop's scope.
     for x in range(5):
         line = f.readline()
         parts = line.split(':', 1)
         field = parts[1] # convert to a string so that it can be stripped of leading and trailing whitespace in the line of code below
         classInfoList.append(field.strip())
-    """x = 5
-    while x > 0:
-        line = f.readline()
-        parts = line.split(':', 1)
-        field = parts[1] # convert to a string so that it can be stripped of leading and trailing whitespace in the line of code below
-        classInfoList.append(field.strip())
-        x -= 1"""
     infoAsStr = "{0[0]}, {0[1]}\n{0[2]}\n{0[3]}\n{0[4]}\n".format(classInfoList)
     return infoAsStr
     f.close()
@@ -49,7 +44,7 @@ def studentScores(fileIn):
     x = 0
     while x < 1:
         line = f.readline()
-        line = line.lower() # Changed from str.casefold() (New in Python 3.3) to str.lower() for backward compatibility.
+        line = line.lower() # UPDATE: Changed from str.casefold() (New in Python 3.3) to str.lower() for backward compatibility.
         if "name" and "ssn" in line:
             i = 0
             hchar = line[i]
@@ -137,14 +132,19 @@ def studentScores(fileIn):
             quizTotal = 0
             examTotal = 0
             while i < len(agradeList):
-                field = headerList[i+4]
-                if 'hw' in field:
-                    hwTotal = hwTotal + agradeList[i]
-                elif 'quiz' in field:
-                    quizTotal = quizTotal + agradeList[i]
-                elif 'exam' in field:
-                    examTotal = examTotal + agradeList[i]
-                i += 1
+                try:
+                    field = headerList[i+4]
+                except IndexError:
+                    print("The number of grades does not match the number of headers for student {}".format(aname))
+                else:
+                    if 'hw' in field:
+                        hwTotal = hwTotal + agradeList[i]
+                    elif 'quiz' in field:
+                        quizTotal = quizTotal + agradeList[i]
+                    elif 'exam' in field:
+                        examTotal = examTotal + agradeList[i]
+                    i += 1
+            print("Outside the while")
             hwGrade = (hwTotal / gradingDict['numHws']) * (gradingDict['weightHws'] * 0.01)
             examGrade = (examTotal / gradingDict['numExams']) * (gradingDict['weightExams'] * 0.01)
             if gradingDict['numQuizzes'] < 1:
