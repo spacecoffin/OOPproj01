@@ -75,6 +75,7 @@ def studentScores(fileIn):
     examGrades = []
     numGrades = []
     letterGrades = []
+    agradeList = []
     while achar:
         achar = ''
         aname = ''
@@ -105,9 +106,67 @@ def studentScores(fileIn):
                 achar = f.read(1)
             apost = achar
             posts.append(apost)
+            achar = f.read(1)
+            agrade = ''
+            anumgrade = 0
+            while achar is not '\n':
+                achar = f.read(1)
+                if not achar:
+                    break
+                if achar.isnumeric():
+                    while achar.isnumeric():
+                        agrade = agrade + achar
+                        achar = f.read(1)
+                    anumgrade = int(agrade)
+                    agradeList.append(anumgrade)
+                    agrade = ''
+                elif achar.isspace():
+                    continue
+            def gradeProcessing(agradeList):
+                gradingDict = gradingInfo(fileIn)
+                i = 0
+                hwTotal = 0
+                quizTotal = 0
+                examTotal = 0
+                while i < len(agradeList): # UPDATE: Changing this to len(headerList) would solve the problem of extra grades.
+                    field = headerList[i+4]
+                    if 'hw' in field:
+                        hwTotal = hwTotal + agradeList[i]
+                    elif 'quiz' in field:
+                        quizTotal = quizTotal + agradeList[i]
+                    elif 'exam' in field:
+                        examTotal = examTotal + agradeList[i]
+                    i += 1
+                hwGrade = (hwTotal / gradingDict['numHws']) * (gradingDict['weightHws'] * 0.01)
+                examGrade = (examTotal / gradingDict['numExams']) * (gradingDict['weightExams'] * 0.01)
+                if gradingDict['numQuizzes'] < 1:
+                    numGrade = round(hwGrade + examGrade)
+                    quizGrade = -1
+                else:
+                    quizGrade = (quizTotal / gradingDict['numQuizzes']) * (gradingDict['weightQuizzes'] * 0.01)
+                    numGrade = round(hwGrade + examGrade + quizGrade)
+                if numGrade >= 90:
+                    letterGrade = 'A'
+                elif numGrade >= 80:
+                    letterGrade = 'B'
+                elif numGrade >= 70:
+                    letterGrade = 'C'
+                elif numGrade >= 60:
+                    letterGrade = 'D'
+                else:
+                    letterGrade = 'F'
+                return list([hwGrade, quizGrade, examGrade, numGrade, letterGrade])
+            gradesList = gradeProcessing(agradeList)
+            hwGrades.append(gradesList[0])
+            quizGrades.append(gradesList[1])
+            examGrades.append(gradesList[2])
+            numGrades.append(gradesList[3])
+            letterGrades.append(gradesList[4])
+            
         if 'UD' in aopt:
             apost = 'N'
             posts.append(apost)
+            
         achar = f.read(1)
         agrade = ''
         anumgrade = 0
@@ -131,6 +190,10 @@ def studentScores(fileIn):
             hwTotal = 0
             quizTotal = 0
             examTotal = 0
+            #if len(agradeList) > (len(headerList) - 4):
+            extraGrades = len(agradeList) - (len(headerList) - 4)
+            print(extraGrades)
+                
             while i < len(agradeList): # UPDATE: Changing this to len(headerList) would solve the problem of extra grades.
                 field = headerList[i+4]
                 if 'hw' in field:
