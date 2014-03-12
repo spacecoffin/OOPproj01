@@ -207,21 +207,27 @@ def stats():
     # This function should output information based on user input.
     reply = 'x'
     gradeData = studentScores(inputFile)
+    
+    # This nested function adds each student's total score to a list that is operated on in order to later display the highest and lowest scores for the class as well as the class average.
     def highLowAvg(gradeData):
         totalList = []
         s = 0
         while s < len(gradeData):
-            if 'AUD' not in gradeData[s][2]:
-                totalList.append(gradeData[s][7])
+            totalList.append(gradeData[s][7])
             s += 1
         totalList = sorted(totalList)
         hiLoAvg = []
         hiLoAvg.extend([totalList[-1], totalList[0], sum(totalList) / len(totalList)])
         return hiLoAvg
-    while reply:
+    
+    while True:
         reply = input('(S)ummarize, (F)ull Display, (R)ange, or (Q)uit: ')
+        
+        # Quit
         if reply == 'Q' or reply == 'q':
             break
+        
+        # Summarize
         elif reply == 'S' or reply == 's':
             print(classInfo(inputFile))
             print("{:<4}{:^13}{:^7}{:^15}{:^5}      {:^7}".format('Id', 'Hws', 'Quizzes', 'Exams', 'Total', 'Grade'))
@@ -235,6 +241,8 @@ def stats():
                 i += 1
             totalStats = highLowAvg(gradeData)
             print("\n{:<38}{:>5}\n{:<38}{:>5}\n{:<38}{:>5.2f}\n".format('Highest:', totalStats[0], 'Lowest:', totalStats[1],'Average:', totalStats[2]))
+            
+        # Full Display
         elif reply == 'F' or reply == 'f':
             print(classInfo(inputFile))
             print("{:<19}{:^4}{:^13}{:^7}{:^15}{:^5}      {:^7}".format('Name', 'Id', 'Hws', 'Quizzes', 'Exams', 'Total', 'Grade'))
@@ -248,8 +256,11 @@ def stats():
                 i += 1
             totalStats = highLowAvg(gradeData)
             print("\n{:<57}{:>5}\n{:<57}{:>5}\n{:<57}{:>5.2f}\n".format('Highest:', totalStats[0], 'Lowest:', totalStats[1],'Average:', totalStats[2]))
+            
+        # Range
         elif reply == 'R' or reply == 'r':
             while True:
+                # Prompt the user for input for the range. Reprompts if the input is not in the correct format.
                 try:
                     scoreRange = sorted(list(map(int, input('\nEnter the range separated by \',\': ').split(','))))
                 except ValueError:
@@ -258,13 +269,18 @@ def stats():
                 if len(scoreRange) != 2:
                     print("\nPlease enter 2 scores separated by a comma.")
                     continue
+                
                 else:
+                    # Total up the number of students whose score are within the range then display that number and restate the ordered range.
                     i = 0
+                    inRange = 0
                     while i < len(gradeData):
-                        if not 'AUD' in gradeData[i][2]:
-                            if gradeData[i][7] >= scoreRange[0] and gradeData[i][7] <= scoreRange[1]:
-                                i += 1
-                    else: print("{} student(s) have total score between {} and {}.".format(i, scoreRange[0], scoreRange[1]))
+                        if gradeData[i][7] >= scoreRange[0] and gradeData[i][7] <= scoreRange[1]:
+                            inRange += 1
+                        i += 1
+                    else:
+                        print("{} student(s) have total score between {} and {}.".format(inRange, scoreRange[0], scoreRange[1]))
+                    # Print the name of each student whose score is within the specified range.
                     i = 0
                     while i < len(gradeData):
                         if not 'AUD' in gradeData[i][2]:
