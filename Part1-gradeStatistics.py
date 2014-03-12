@@ -131,20 +131,15 @@ def studentScores(fileIn):
             hwTotal = 0
             quizTotal = 0
             examTotal = 0
-            while i < len(agradeList):
-                try:
-                    field = headerList[i+4]
-                except IndexError:
-                    print("The number of grades does not match the number of headers for student {}".format(aname))
-                else:
-                    if 'hw' in field:
-                        hwTotal = hwTotal + agradeList[i]
-                    elif 'quiz' in field:
-                        quizTotal = quizTotal + agradeList[i]
-                    elif 'exam' in field:
-                        examTotal = examTotal + agradeList[i]
-                    i += 1
-            print("Outside the while")
+            while i < len(agradeList): # UPDATE: Changing this to len(headerList) would solve the problem of extra grades.
+                field = headerList[i+4]
+                if 'hw' in field:
+                    hwTotal = hwTotal + agradeList[i]
+                elif 'quiz' in field:
+                    quizTotal = quizTotal + agradeList[i]
+                elif 'exam' in field:
+                    examTotal = examTotal + agradeList[i]
+                i += 1
             hwGrade = (hwTotal / gradingDict['numHws']) * (gradingDict['weightHws'] * 0.01)
             examGrade = (examTotal / gradingDict['numExams']) * (gradingDict['weightExams'] * 0.01)
             if gradingDict['numQuizzes'] < 1:
