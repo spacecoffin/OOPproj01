@@ -176,6 +176,7 @@ def studentScores(fileIn):
             examGrades.append(gradesList[2])
             numGrades.append(gradesList[3])
             letterGrades.append(gradesList[4])
+            # Prevent extra whitespace after the final line of student information from causing the program to loop.
             achar = openObj.read(1)
             while achar.isspace():
                 achar = openObj.read(1)
