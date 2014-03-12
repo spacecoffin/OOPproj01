@@ -82,14 +82,14 @@ def studentScores(fileIn):
             aname = aname + achar
             achar = f.read(1)
         aname = aname.strip()
-        names.append(aname)
+        #names.append(aname)
         assn = ''
         y = 11
         while y > 0:
             assn = assn + achar
             achar = f.read(1)
             y -= 1
-        ssns.append(assn)
+        #ssns.append(assn)
         aopt = ''
         while achar.isspace():
             achar = f.read(1)
@@ -98,82 +98,84 @@ def studentScores(fileIn):
             aopt = aopt + achar
             achar = f.read(1)
             z -= 1
-        opts.append(aopt)
+        #opts.append(aopt)
         apost = ''
         if 'F' in aopt:
             while achar.isspace():
                 achar = f.read(1)
             apost = achar
+            names.append(aname)
+            ssns.append(assn)
+            opts.append(aopt)
             posts.append(apost)
-        if 'UD' in aopt:
-            apost = 'N'
-            posts.append(apost)
-        achar = f.read(1)
-        agrade = ''
-        anumgrade = 0
-        agradeList = []
-        while achar is not '\n':
             achar = f.read(1)
-            if not achar:
-                break
-            if achar.isnumeric():
-                while achar.isnumeric():
-                    agrade = agrade + achar
-                    achar = f.read(1)
-                anumgrade = int(agrade)
-                agradeList.append(anumgrade)
-                agrade = ''
-            elif achar.isspace():
-                continue
-        def gradeProcessing(agradeList):
-            gradingDict = gradingInfo(fileIn)
-            i = 0
-            hwTotal = 0
-            quizTotal = 0
-            examTotal = 0
-            while i < len(agradeList):
-                field = headerList[i+4]
-                if 'hw' in field:
-                    hwTotal = hwTotal + agradeList[i]
-                elif 'quiz' in field:
-                    quizTotal = quizTotal + agradeList[i]
-                elif 'exam' in field:
-                    examTotal = examTotal + agradeList[i]
-                i += 1
-            hwGrade = (hwTotal / gradingDict['numHws']) * (gradingDict['weightHws'] * 0.01)
-            examGrade = (examTotal / gradingDict['numExams']) * (gradingDict['weightExams'] * 0.01)
-            if gradingDict['numQuizzes'] < 1:
-                numGrade = round(hwGrade + examGrade)
-                quizGrade = -1
-            else:
-                quizGrade = (quizTotal / gradingDict['numQuizzes']) * (gradingDict['weightQuizzes'] * 0.01)
-                numGrade = round(hwGrade + examGrade + quizGrade)
-            if numGrade >= 90:
-                letterGrade = 'A'
-            elif numGrade >= 80:
-                letterGrade = 'B'
-            elif numGrade >= 70:
-                letterGrade = 'C'
-            elif numGrade >= 60:
-                letterGrade = 'D'
-            else:
-                letterGrade = 'F'
-            return list([hwGrade, quizGrade, examGrade, numGrade, letterGrade])
-        gradesList = gradeProcessing(agradeList)
-        hwGrades.append(gradesList[0])
-        quizGrades.append(gradesList[1])
-        examGrades.append(gradesList[2])
-        numGrades.append(gradesList[3])
-        letterGrades.append(gradesList[4])
-    o = 0
-    while o < len(opts):
-        if 'P/F' in opts[o]: # keep having trouble with these string equivalences
-            if letterGrades[o] in ('A', 'B', 'C'):
-                letterGrades[o] = 'P'
-            elif letterGrades[o] in ('D', 'F'):
-                letterGrades[o] = 'F'
-            # else: throw exception?
-        o += 1
+            agrade = ''
+            anumgrade = 0
+            agradeList = []
+            while achar is not '\n':
+                achar = f.read(1)
+                if not achar:
+                    break
+                if achar.isnumeric():
+                    while achar.isnumeric():
+                        agrade = agrade + achar
+                        achar = f.read(1)
+                    anumgrade = int(agrade)
+                    agradeList.append(anumgrade)
+                    agrade = ''
+                elif achar.isspace():
+                    continue
+            def gradeProcessing(agradeList):
+                gradingDict = gradingInfo(fileIn)
+                i = 0
+                hwTotal = 0
+                quizTotal = 0
+                examTotal = 0
+                print(aname)
+                while i < len(agradeList):
+                    field = headerList[i+4]
+                    if 'hw' in field:
+                        hwTotal = hwTotal + agradeList[i]
+                    elif 'quiz' in field:
+                        quizTotal = quizTotal + agradeList[i]
+                    elif 'exam' in field:
+                        examTotal = examTotal + agradeList[i]
+                    i += 1
+                hwGrade = (hwTotal / gradingDict['numHws']) * (gradingDict['weightHws'] * 0.01)
+                examGrade = (examTotal / gradingDict['numExams']) * (gradingDict['weightExams'] * 0.01)
+                if gradingDict['numQuizzes'] < 1:
+                    numGrade = round(hwGrade + examGrade)
+                    quizGrade = -1
+                else:
+                    quizGrade = (quizTotal / gradingDict['numQuizzes']) * (gradingDict['weightQuizzes'] * 0.01)
+                    numGrade = round(hwGrade + examGrade + quizGrade)
+                if numGrade >= 90:
+                    letterGrade = 'A'
+                elif numGrade >= 80:
+                    letterGrade = 'B'
+                elif numGrade >= 70:
+                    letterGrade = 'C'
+                elif numGrade >= 60:
+                    letterGrade = 'D'
+                else:
+                    letterGrade = 'F'
+                return list([hwGrade, quizGrade, examGrade, numGrade, letterGrade])
+            gradesList = gradeProcessing(agradeList)
+            hwGrades.append(gradesList[0])
+            quizGrades.append(gradesList[1])
+            examGrades.append(gradesList[2])
+            numGrades.append(gradesList[3])
+            letterGrades.append(gradesList[4])
+        if 'UD' in aopt:
+            while achar is not '\n':
+                achar = f.read(1)
+            continue
+    for i in range(len(opts)):
+        if 'P/F' in opts[i]:
+            if letterGrades[i] in ('A', 'B', 'C'):
+                letterGrades[i] = 'P'
+            elif letterGrades[i] in ('D', 'F'):
+                letterGrades[i] = 'F'
     return list(zip(names, ssns, opts, posts, hwGrades, quizGrades, examGrades, numGrades, letterGrades))
         # Information fields about the students should be pulled from left to right.
         # To pull the names: Read the str pulled from the io from left to right, char by char. Create a new string for the student's name. Read a char then check if it is a number. If it is not, append it to the string (to later be appended to a list of all the student's info). If it is a number, strip the string using strip(), create a new sting for the student's SSN and append it to that.
