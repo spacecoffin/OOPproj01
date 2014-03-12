@@ -70,7 +70,7 @@ def studentScores(fileIn):
     
     headerList = makeHeaders(openObj)
     
-    achar = 'a'
+    achar = ' '
     names = []
     ssns = []
     opts = []
@@ -85,27 +85,12 @@ def studentScores(fileIn):
     while achar:
         print("We're at the top")
         print("\"{}\"".format(achar))
-        try:
-            achar = openObj.read(1)
-        except EOFError:
-            print("EOF in main while 1")
-            continue
-        else:
-            if achar.isspace():
-                try:
-                    achar = openObj.read(1)
-                except EOFError:
-                    print("EOF in space killer")
-                    continue
         aname = ''
         print("\"{}\": Right above previous error".format(achar))
         while not achar.isnumeric():
             aname = aname + achar
-            try:
-                achar = openObj.read(1)
-            except EOFError:
-                print("EOF in aname")
-                break
+            achar = openObj.read(1)
+
         aname = aname.strip()
         print(aname)
         assn = ''
@@ -150,6 +135,7 @@ def studentScores(fileIn):
                     agrade = ''
                 elif achar.isspace():
                     continue
+                
             def gradeProcessing(agradeList):
                 gradingDict = gradingInfo(fileIn)
                 i = 0
@@ -157,7 +143,11 @@ def studentScores(fileIn):
                 quizTotal = 0
                 examTotal = 0
                 print("{} in grading".format(aname))
-                while i < len(agradeList):
+                discrepancy = len(agradeList) - (len(headerList) - 4)
+                print(discrepancy)
+                if discrepancy > 0:
+                    print("The number of grades does not match the number of headers for student {}!".format(aname))
+                while (i + discrepancy) < len(agradeList):
                     field = headerList[i+4]
                     if 'hw' in field:
                         hwTotal = hwTotal + agradeList[i]
@@ -191,10 +181,13 @@ def studentScores(fileIn):
             examGrades.append(gradesList[2])
             numGrades.append(gradesList[3])
             letterGrades.append(gradesList[4])
+            achar = openObj.read(1)
+            continue
         if 'UD' in aopt:
             while achar != '\n':
                 achar = openObj.read(1)
             print("{} ain't being graded".format(aname))
+            achar = openObj.read(1)
             continue
     print("We're about to PassFail")
     print(list(opts))
